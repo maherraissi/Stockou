@@ -1,0 +1,141 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar class="luxury-toolbar">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/sales" color="primary"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="luxury-title text-gradient-gold">Nouvelle vente</ion-title>
+  </ion-toolbar>
+  
+  <div class="search-container">
+    <ion-searchbar 
+      [value]="searchQuery" 
+      (ionInput)="filterProducts($event)" 
+      (ionClear)="filterProducts($event)"
+      placeholder="Rechercher produit, ref, code-barres…" 
+      animated="true"
+      debounce="0"
+      class="luxury-searchbar"
+      mode="ios">
+    </ion-searchbar>
+    <ion-button expand="block" fill="outline" color="primary" style="margin-top: 12px;" (click)="scanAndAddProduct()">
+      <ion-icon name="scan-outline" slot="start"></ion-icon>
+      Scanner un code-barres
+    </ion-button>
+  </div>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="pos-content">
+  
+  <!-- Search Results Dropdown overlay -->
+  <div slot="fixed" *ngIf="searchQuery && searchQuery.trim().length > 0 && filteredProducts.length > 0" class="search-results-overlay glass-card">
+    <ion-list class="results-list" lines="none">
+      <ion-item *ngFor="let product of filteredProducts" button (click)="addProductToSale(product)" class="result-item">
+        <ion-avatar slot="start" class="result-avatar">
+          <img [src]="product.imagePath ? product.imagePath : 'assets/placeholder.png'" />
+        </ion-avatar>
+        <ion-label>
+          <h2 class="result-name">{{ product.nom }}</h2>
+          <p class="result-price">{{ product.prixVente | currency:'TND':'symbol':'1.0-3' }} <span class="stock-info">(Stock: {{ product.stock }})</span></p>
+        </ion-label>
+        <ion-icon name="add-circle" slot="end" color="primary" class="add-icon"></ion-icon>
+      </ion-item>
+    </ion-list>
+  </div>
+
+  <div class="cart-container">
+    <h3 class="section-title">Panier en cours</h3>
+    
+    <div *ngIf="selectedProducts.length === 0" class="empty-state glass-card">
+      <div class="icon-circle empty-circle">
+        <ion-icon name="cart-outline"></ion-icon>
+      </div>
+      <h3>Panier vide</h3>
+      <p>Recherchez un produit pour commencer la vente.</p>
+    </div>
+
+    <div class="cart-list" *ngIf="selectedProducts.length > 0">
+      <ion-list class="luxury-items-list" lines="none">
+        
+        <ion-item-sliding *ngFor="let item of selectedProducts; let i = index" class="glass-card slide-item">
+          <ion-item class="list-item">
+            <ion-label class="cart-item-label" style="white-space: normal;">
+              <h2 class="item-name">{{ item.produit?.nom }}</h2>
+              <p class="item-price">{{ item.prixUnitaire | currency:'TND':'symbol':'1.0-3' }} <span class="per-unit">l'unité</span></p>
+            </ion-label>
+            
+            <div slot="end" class="quantity-controls">
+              <ion-button fill="clear" (click)="updateQuantity(item, -1)" class="qty-btn" [disabled]="item.quantite <= 1">
+                <ion-icon name="remove-circle"></ion-icon>
+              </ion-button>
+              <span class="qty">{{ item.quantite }}</span>
+              <ion-button fill="clear" (click)="updateQuantity(item, 1)" class="qty-btn" [disabled]="item.quantite >= (item.produit?.stock || 0)">
+                <ion-icon name="add-circle"></ion-icon>
+              </ion-button>
+            </div>
+          </ion-item>
+
+          <ion-item-options side="end">
+            <ion-item-option color="danger" (click)="removeProductFromSale(i)" class="delete-option">
+              <ion-icon slot="icon-only" name="trash"></ion-icon>
+            </ion-item-option>
+          </ion-item-options>
+        </ion-item-sliding>
+      </ion-list>
+
+      <div class="discount-section glass-card">
+        <ion-item class="glass-input discount-input" lines="none">
+          <ion-label position="stacked">Remise globale (DT)</ion-label>
+          <ion-input type="number" [(ngModel)]="globalDiscount" placeholder="0.000" min="0"></ion-input>
+          <ion-icon slot="start" name="pricetag-outline" class="input-icon"></ion-icon>
+        </ion-item>
+      </div>
+
+      <div class="discount-section glass-card">
+        <ion-item class="glass-input discount-input" lines="none">
+          <ion-label position="stacked">Client</ion-label>
+          <ion-input type="text" [(ngModel)]="clientNom" placeholder="Nom du client (optionnel)"></ion-input>
+          <ion-icon slot="start" name="person-outline" class="input-icon"></ion-icon>
+        </ion-item>
+        <ion-item class="glass-input discount-input" lines="none">
+          <ion-label position="stacked">Téléphone</ion-label>
+          <ion-input type="text" [(ngModel)]="clientTelephone" placeholder="Numéro de téléphone"></ion-input>
+          <ion-icon slot="start" name="call-outline" class="input-icon"></ion-icon>
+        </ion-item>
+        <ion-item class="glass-input discount-input" lines="none">
+          <ion-label position="stacked">Adresse</ion-label>
+          <ion-input type="text" [(ngModel)]="clientAdresse" placeholder="Adresse du client"></ion-input>
+          <ion-icon slot="start" name="location-outline" class="input-icon"></ion-icon>
+        </ion-item>
+      </div>
+
+      <div class="discount-section glass-card">
+        <ion-item class="glass-input discount-input" lines="none">
+          <ion-label>Sous-total</ion-label>
+          <ion-note slot="end">{{ getSousTotal() | currency:'TND':'symbol':'1.0-3' }}</ion-note>
+        </ion-item>
+        <ion-item class="glass-input discount-input" lines="none">
+          <ion-label>Profit estimé</ion-label>
+          <ion-note slot="end">{{ getProfit() | currency:'TND':'symbol':'1.0-3' }}</ion-note>
+        </ion-item>
+      </div>
+      
+      <!-- Padding at the bottom -->
+      <div style="height: 120px;"></div>
+    </div>
+  </div>
+
+</ion-content>
+
+<!-- Floating footer -->
+<div *ngIf="selectedProducts.length > 0" class="floating-checkout-footer">
+  <div class="luxury-footer">
+    <div class="total-section">
+      <div class="total-label">Total à payer</div>
+      <div class="total-amount">{{ getTotalPrice() | currency:'TND':'symbol':'1.0-3' }}</div>
+    </div>
+    <ion-button class="gold-btn checkout-btn" expand="block" (click)="finishSale()">
+      Valider la vente
+      <ion-icon name="checkmark-done-circle" slot="end"></ion-icon>
+    </ion-button>
+  </div>
+</div>

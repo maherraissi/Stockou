@@ -1,0 +1,388 @@
+// ── Dashboard Variables ─────────────────────────────────────────────────────
+$primary-orange: #F97316;
+$primary-green: #10B981;
+$primary-blue: #3B82F6;
+$primary-purple: #A78BFA;
+$primary-yellow: #F59E0B;
+
+:host {
+  --app-bg: #0f172a;
+}
+
+.dashboard-content {
+  padding: 8px 0 16px 0;
+}
+
+// ── KPI Cards Grid ──────────────────────────────────────────────────────────
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 12px;
+  padding: 12px 14px;
+}
+
+.kpi-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 14px;
+  margin: 0 !important;
+  border-radius: 16px !important;
+  cursor: default;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 16px 40px 0 rgba(0, 0, 0, 0.4) !important;
+  }
+}
+
+.kpi-icon-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  flex-shrink: 0;
+  font-size: 22px;
+}
+
+.kpi-orange .kpi-icon-wrap { background: rgba(249,115,22,0.18); color: $primary-orange; }
+.kpi-green  .kpi-icon-wrap { background: rgba(16,185,129,0.18);  color: $primary-green;  }
+.kpi-blue   .kpi-icon-wrap { background: rgba(59,130,246,0.18);   color: $primary-blue;   }
+.kpi-purple .kpi-icon-wrap { background: rgba(167,139,250,0.18);  color: $primary-purple; }
+.kpi-yellow .kpi-icon-wrap { background: rgba(245,158,11,0.18);   color: $primary-yellow; }
+
+.kpi-info {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.kpi-label {
+  font-size: 11px;
+  font-weight: 500;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.kpi-value {
+  font-size: 17px;
+  font-weight: 800;
+  color: #f1f5f9;
+  white-space: nowrap;
+}
+
+.kpi-devise {
+  font-size: 11px;
+  font-weight: 500;
+  color: #94a3b8;
+}
+
+// ── Section Titles ──────────────────────────────────────────────────────────
+.section-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #e2e8f0;
+  margin: 20px 14px 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-right: 14px;
+}
+
+.alert-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: rgba(239,68,68,0.2);
+  color: #ef4444;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+// ── Period Select ─────────────────────────────────────────────────────────────
+.period-select {
+  background: rgba(255,255,255,0.05);
+  border-radius: 10px;
+  color: $primary-orange;
+  font-size: 13px;
+  font-weight: 600;
+  --padding-start: 12px;
+  --padding-end: 12px;
+  --padding-top: 6px;
+  --padding-bottom: 6px;
+  min-height: 32px;
+  border: 1px solid rgba(249,115,22,0.3);
+}
+
+// ── Charts ──────────────────────────────────────────────────────────────────
+.chart-card {
+  margin: 0 14px 14px !important;
+  padding: 16px;
+}
+
+.chart-wrap {
+  position: relative;
+  height: 230px;
+  width: 100%;
+}
+
+.chart-wrap-sm {
+  height: 190px;
+}
+
+.chart-wrap-md {
+  height: 200px;
+}
+
+.charts-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+
+  .chart-card {
+    margin: 0 7px 14px !important;
+
+    &:first-child { margin-left: 14px !important; }
+    &:last-child  { margin-right: 14px !important; }
+  }
+}
+
+.no-data-msg {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 20px;
+  color: #64748b;
+  font-size: 13px;
+
+  ion-icon { font-size: 32px; }
+}
+
+.empty-chart {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 24px 20px;
+  margin: 0 14px 14px !important;
+  color: #64748b;
+  font-size: 13px;
+
+  ion-icon { font-size: 28px; }
+}
+
+// ── Data Table ──────────────────────────────────────────────────────────────
+.table-card {
+  padding: 0 !important;
+  overflow: hidden;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+
+  th {
+    padding: 10px 12px;
+    text-align: left;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #64748b;
+    background: rgba(255,255,255,0.03);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+
+  td {
+    padding: 10px 12px;
+    color: #e2e8f0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    vertical-align: middle;
+  }
+
+  tr:last-child td { border-bottom: none; }
+
+  tr:hover td { background: rgba(255,255,255,0.02); }
+}
+
+.product-name {
+  font-weight: 600;
+  max-width: 120px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.rank-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.rank-1 { background: rgba(245,158,11,0.25); color: #F59E0B; }
+.rank-2 { background: rgba(148,163,184,0.25); color: #94a3b8; }
+.rank-3 { background: rgba(180,83,9,0.25);   color: #b45309; }
+.rank-4, .rank-5 { background: rgba(51,65,85,0.4); color: #64748b; }
+
+.badge-blue {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 6px;
+  background: rgba(59,130,246,0.15);
+  color: $primary-blue;
+  font-weight: 600;
+  font-size: 12px;
+}
+
+.ref-badge {
+  font-family: monospace;
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+.profit-positive { color: $primary-green; font-weight: 600; }
+.profit-negative { color: #ef4444; font-weight: 600; }
+
+// ── Stock Alerts ─────────────────────────────────────────────────────────────
+.stock-alerts {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.stock-alert-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  margin-bottom: 8px !important;
+  border-radius: 14px !important;
+  cursor: pointer;
+}
+
+.alert-product-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.prod-icon {
+  font-size: 24px;
+  color: #64748b;
+}
+
+.prod-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #e2e8f0;
+}
+
+.prod-ref {
+  font-size: 11px;
+  color: #64748b;
+  margin-top: 2px;
+}
+
+.stock-badge {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+
+  &.danger  { background: rgba(239,68,68,0.15);   color: #ef4444; border: 1px solid rgba(239,68,68,0.3); }
+  &.warning { background: rgba(245,158,11,0.15);  color: #F59E0B; border: 1px solid rgba(245,158,11,0.3); }
+}
+
+.empty-small {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 20px;
+  margin: 0 14px 14px !important;
+  font-size: 13px;
+  color: #64748b;
+}
+
+.ok-icon {
+  font-size: 22px;
+  color: $primary-green;
+}
+
+// ── States ──────────────────────────────────────────────────────────────────
+.state-container, .loader-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 60vh;
+  gap: 16px;
+  color: #94a3b8;
+}
+
+.state-card {
+  padding: 28px 24px;
+  text-align: center;
+  max-width: 380px;
+  width: 90%;
+
+  h3 { color: #f1f5f9; margin-bottom: 8px; }
+  p  { color: #94a3b8; font-size: 13px; margin-bottom: 20px; word-break: break-word; }
+}
+
+.state-icon { font-size: 52px; margin-bottom: 8px; }
+.error-icon { color: #ef4444; }
+
+.luxury-spinner {
+  width: 48px;
+  height: 48px;
+  border: 3px solid rgba(249,115,22,0.2);
+  border-top-color: $primary-orange;
+  border-radius: 50%;
+  animation: spin 0.9s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+// ── Responsive ──────────────────────────────────────────────────────────────
+@media (max-width: 480px) {
+  .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+
+  .charts-row {
+    grid-template-columns: 1fr;
+    .chart-card { margin: 0 14px 14px !important; }
+  }
+
+  .data-table {
+    font-size: 11px;
+    th, td { padding: 8px; }
+  }
+}
+
+@media (min-width: 768px) {
+  .kpi-grid { grid-template-columns: repeat(5, 1fr); }
+}

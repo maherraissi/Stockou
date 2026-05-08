@@ -1,0 +1,94 @@
+:root {
+  /** Primary - Luxurious Gold/Accent **/
+  --ion-color-primary: #d4af37;
+  --ion-color-primary-rgb: 212,175,55;
+  --ion-color-primary-contrast: #000000;
+  --ion-color-primary-contrast-rgb: 0,0,0;
+  --ion-color-primary-shade: #bb9a30;
+  --ion-color-primary-tint: #d8b74b;
+
+  /** Secondary - Sleek Muted Blue/Gray **/
+  --ion-color-secondary: #2A2D34;
+  --ion-color-secondary-rgb: 42,45,52;
+  --ion-color-secondary-contrast: #ffffff;
+  --ion-color-secondary-contrast-rgb: 255,255,255;
+  --ion-color-secondary-shade: #25282e;
+  --ion-color-secondary-tint: #3f4248;
+
+  /** Tertiary - Premium Emerald for Success **/
+  --ion-color-tertiary: #10B981;
+  --ion-color-tertiary-rgb: 16,185,129;
+  --ion-color-tertiary-contrast: #ffffff;
+  --ion-color-tertiary-contrast-rgb: 255,255,255;
+  --ion-color-tertiary-shade: #0ea371;
+  --ion-color-tertiary-tint: #28c08e;
+
+  /** Success - Standard Green **/
+  --ion-color-success: #10B981;
+  --ion-color-success-rgb: 16,185,129;
+  --ion-color-success-contrast: #ffffff;
+  --ion-color-success-contrast-rgb: 255,255,255;
+  --ion-color-success-shade: #0ea371;
+  --ion-color-success-tint: #28c08e;
+
+  /** Warning - Modern Amber **/
+  --ion-color-warning: #F59E0B;
+  --ion-color-warning-rgb: 245,158,11;
+  --ion-color-warning-contrast: #000000;
+  --ion-color-warning-contrast-rgb: 0,0,0;
+  --ion-color-warning-shade: #d88b0a;
+  --ion-color-warning-tint: #f6a823;
+
+  /** Danger - Crisp Red **/
+  --ion-color-danger: #EF4444;
+  --ion-color-danger-rgb: 239,68,68;
+  --ion-color-danger-contrast: #ffffff;
+  --ion-color-danger-contrast-rgb: 255,255,255;
+  --ion-color-danger-shade: #d23c3c;
+  --ion-color-danger-tint: #f15757;
+
+  /** Dark - Rich Black for Backgrounds **/
+  --ion-color-dark: #0A0A0A;
+  --ion-color-dark-rgb: 10,10,10;
+  --ion-color-dark-contrast: #ffffff;
+  --ion-color-dark-contrast-rgb: 255,255,255;
+  --ion-color-dark-shade: #090909;
+  --ion-color-dark-tint: #222222;
+
+  /** Medium - Gray Text **/
+  --ion-color-medium: #888888;
+  --ion-color-medium-rgb: 136,136,136;
+  --ion-color-medium-contrast: #ffffff;
+  --ion-color-medium-contrast-rgb: 255,255,255;
+  --ion-color-medium-shade: #787878;
+  --ion-color-medium-tint: #949494;
+
+  /** Light - Soft White for Cards **/
+  --ion-color-light: #1A1A1A;
+  --ion-color-light-rgb: 26,26,26;
+  --ion-color-light-contrast: #ffffff;
+  --ion-color-light-contrast-rgb: 255,255,255;
+  --ion-color-light-shade: #171717;
+  --ion-color-light-tint: #313131;
+
+  /** Custom Glassmorphism Theme Variables **/
+  --app-bg: #0A0A0A;
+  --app-card-bg: rgba(255, 255, 255, 0.03);
+  --app-card-border: rgba(255, 255, 255, 0.08);
+  --app-card-backdrop: blur(16px);
+  --app-text-primary: #FFFFFF;
+  --app-text-secondary: #A1A1AA;
+}
+
+body {
+  --ion-background-color: var(--app-bg);
+  --ion-text-color: var(--app-text-primary);
+  --ion-font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  
+  --ion-toolbar-background: rgba(10, 10, 10, 0.8);
+  --ion-toolbar-color: #ffffff;
+  --ion-tab-bar-background: rgba(10, 10, 10, 0.8);
+  --ion-tab-bar-color: #888888;
+  --ion-tab-bar-color-selected: var(--ion-color-primary);
+  --ion-item-background: transparent;
+}

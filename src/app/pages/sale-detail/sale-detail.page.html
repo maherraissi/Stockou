@@ -1,0 +1,75 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar class="luxury-toolbar">
+    <ion-buttons slot="start">
+      <ion-button (click)="goBack()" color="primary">
+        <ion-icon slot="icon-only" name="chevron-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title class="luxury-title text-gradient-gold">Détail Vente</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="exportPdf()" color="primary" [disabled]="!sale">
+        <ion-icon slot="icon-only" name="download-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div *ngIf="isLoading" class="loader-container">
+    <div class="luxury-spinner"></div>
+    <p style="color: #64748b; margin-top: 12px;">Chargement du détail...</p>
+  </div>
+
+  <div *ngIf="!isLoading && sale" class="detail-container">
+    <div class="glass-card header-info">
+      <div class="sale-id">Facture #{{ sale.id }}</div>
+      <div class="sale-date">{{ sale.date | date:'dd MMMM yyyy, HH:mm' }}</div>
+      
+      <div class="client-box" *ngIf="sale.client?.nom">
+        <div class="client-title">Client</div>
+        <div class="client-name">{{ sale.client?.nom }}</div>
+        <div class="client-detail" *ngIf="sale.client?.telephone">{{ sale.client?.telephone }}</div>
+        <div class="client-detail" *ngIf="sale.client?.adresse">{{ sale.client?.adresse }}</div>
+      </div>
+    </div>
+
+    <h3 class="section-title">Articles</h3>
+    <div class="glass-card items-card">
+      <div class="item-row" *ngFor="let item of sale.items">
+        <div class="item-info">
+          <div class="item-name">{{ item.produit?.nom }}</div>
+          <div class="item-price">{{ item.quantite }} x {{ item.prixUnitaire | number:'1.0-3' }} DT</div>
+        </div>
+        <div class="item-total">{{ item.total | number:'1.0-3' }} DT</div>
+      </div>
+    </div>
+
+    <div class="glass-card totals-card">
+      <div class="total-row">
+        <span>Sous-total</span>
+        <span>{{ sale.totalHt | number:'1.0-3' }} DT</span>
+      </div>
+      <div class="total-row remise" *ngIf="sale.totalRemise > 0">
+        <span>Remise</span>
+        <span>-{{ sale.totalRemise | number:'1.0-3' }} DT</span>
+      </div>
+      <div class="total-row final">
+        <span>Total TTC</span>
+        <span class="total-value">{{ sale.totalTtc | number:'1.0-3' }} DT</span>
+      </div>
+    </div>
+
+    <div class="read-only-badge">
+      <ion-icon name="lock-closed-outline"></ion-icon>
+      Document non modifiable
+    </div>
+    
+    <div style="height: 40px;"></div>
+  </div>
+
+  <div *ngIf="!isLoading && !sale" class="empty-state glass-card">
+    <ion-icon name="alert-circle-outline" color="warning" style="font-size: 48px;"></ion-icon>
+    <h3>Vente introuvable</h3>
+    <ion-button expand="block" (click)="goBack()">Retour</ion-button>
+  </div>
+</ion-content>

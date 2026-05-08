@@ -1,0 +1,82 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar class="luxury-toolbar">
+    <ion-buttons slot="start">
+      <ion-menu-button color="primary"></ion-menu-button>
+    </ion-buttons>
+    <ion-title class="luxury-title text-gradient-gold">
+      <ion-icon name="home" style="font-size:18px;margin-right:6px;"></ion-icon>
+      Accueil
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="home-wrapper">
+
+    <!-- ⏰ Horloge temps réel -->
+    <div class="clock-section">
+      <div class="clock-time">{{ currentTime }}</div>
+      <div class="clock-date">{{ currentDate }}</div>
+    </div>
+
+    <!-- 🏷️ Logo Stockou -->
+    <div class="logo-section">
+      <div class="logo-glow-ring">
+        <div class="logo-inner">
+          <ion-icon name="diamond" class="logo-diamond"></ion-icon>
+        </div>
+      </div>
+      <h1 class="logo-text">STOCKOU</h1>
+      <p class="logo-sub">Gestion de stock &amp; ventes</p>
+    </div>
+
+    <!-- 🟦 Boutons d'accès rapide -->
+    <div class="quick-grid">
+
+      <button class="quick-btn btn-blue" routerLink="/products">
+        <div class="btn-icon-wrap">
+          <ion-icon name="cube"></ion-icon>
+        </div>
+        <span class="btn-label">Produits</span>
+      </button>
+
+      <button class="quick-btn btn-green" routerLink="/create-sale">
+        <div class="btn-icon-wrap">
+          <ion-icon name="cart"></ion-icon>
+        </div>
+        <span class="btn-label">Nouvelle Vente</span>
+      </button>
+
+      <button class="quick-btn btn-red" routerLink="/products">
+        <div class="btn-icon-wrap">
+          <ion-icon name="warning"></ion-icon>
+        </div>
+        <span class="btn-label">Rupture de Stock</span>
+      </button>
+
+      <button class="quick-btn btn-purple" routerLink="/cloture-caisse">
+        <div class="btn-icon-wrap">
+          <ion-icon name="moon"></ion-icon>
+        </div>
+        <span class="btn-label">Caisse</span>
+      </button>
+
+      <button class="quick-btn btn-orange" routerLink="/sales">
+        <div class="btn-icon-wrap">
+          <ion-icon name="time"></ion-icon>
+        </div>
+        <span class="btn-label">Historique</span>
+      </button>
+
+      <button class="quick-btn btn-gold" routerLink="/dashboard">
+        <div class="btn-icon-wrap">
+          <ion-icon name="stats-chart"></ion-icon>
+        </div>
+        <span class="btn-label">Statistiques</span>
+      </button>
+
+    </div>
+
+    <div style="height: 40px;"></div>
+  </div>
+</ion-content>

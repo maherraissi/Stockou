@@ -1,0 +1,353 @@
+/* Core CSS required for Ionic components to work properly */
+@import "@ionic/angular/css/core.css";
+@import "@ionic/angular/css/normalize.css";
+@import "@ionic/angular/css/structure.css";
+@import "@ionic/angular/css/typography.css";
+@import "@ionic/angular/css/display.css";
+@import "@ionic/angular/css/padding.css";
+@import "@ionic/angular/css/float-elements.css";
+@import "@ionic/angular/css/text-alignment.css";
+@import "@ionic/angular/css/text-transformation.css";
+@import "@ionic/angular/css/flex-utils.css";
+
+/* Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+body {
+  font-family: 'Inter', 'Segoe UI', 'Aptos', sans-serif;
+  background-color: var(--app-bg);
+  color: var(--app-text-primary);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(249,115,22,0.5); }
+
+/* ── Glassmorphism Card ────────────────────────────────────────────────────── */
+.glass-card {
+  background: var(--app-card-bg) !important;
+  backdrop-filter: var(--app-card-backdrop) !important;
+  -webkit-backdrop-filter: var(--app-card-backdrop) !important;
+  border: 1px solid var(--app-card-border) !important;
+  border-radius: 20px !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.28) !important;
+  margin: 12px !important;
+  overflow: hidden;
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.glass-card:hover {
+  border-color: rgba(249, 115, 22, 0.25) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 16px 48px rgba(0,0,0,0.35) !important;
+}
+
+/* ── Gradient Text ─────────────────────────────────────────────────────────── */
+.text-gradient-gold {
+  background: linear-gradient(135deg, #F97316 0%, #FBBF24 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Toolbar ───────────────────────────────────────────────────────────────── */
+ion-toolbar.luxury-toolbar {
+  --background: rgba(15, 23, 42, 0.92);
+  --border-width: 0;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+ion-title.luxury-title {
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: -0.3px;
+}
+
+ion-content {
+  --background: var(--app-bg);
+}
+
+ion-header { box-shadow: 0 2px 20px rgba(0,0,0,0.3) !important; }
+
+/* ── Luxury Menu ───────────────────────────────────────────────────────────── */
+.luxury-menu {
+  --background: #080e1a;
+  --width: 260px;
+  border-right: 1px solid rgba(255,255,255,0.06);
+}
+
+.luxury-menu-content { --background: #080e1a; }
+
+.luxury-list {
+  background: transparent !important;
+  padding: 8px;
+}
+
+.luxury-list ion-item {
+  --background: transparent;
+  --border-radius: 14px;
+  --padding-start: 10px;
+  --min-height: 52px;
+  margin-bottom: 4px;
+  border-radius: 14px;
+  transition: background 0.2s ease;
+  color: #94a3b8;
+  cursor: pointer;
+}
+
+.luxury-list ion-item:hover {
+  --background: rgba(249,115,22,0.08);
+  color: #f97316;
+}
+
+.luxury-list ion-item.selected-item {
+  --background: rgba(249,115,22,0.14);
+  color: #f97316;
+  border: 1px solid rgba(249,115,22,0.2);
+}
+
+.luxury-list .icon-box {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  margin-right: 12px;
+  background: rgba(255,255,255,0.04);
+  flex-shrink: 0;
+}
+
+.luxury-list ion-item.selected-item .icon-box {
+  background: rgba(249,115,22,0.15);
+}
+
+.luxury-list ion-label {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.menu-divider {
+  height: 1px;
+  background: rgba(255,255,255,0.06);
+  margin: 12px 8px;
+}
+
+.menu-header-spacer { height: 8px; }
+
+.menu-footer {
+  padding: 16px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  text-align: center;
+
+  .version {
+    font-size: 11px;
+    color: #334155;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 0;
+  }
+}
+
+.logo-icon {
+  font-size: 16px;
+  margin-right: 6px;
+  vertical-align: middle;
+}
+
+/* ── Split Pane ────────────────────────────────────────────────────────────── */
+.luxury-split-pane {
+  --border: 1px solid rgba(255,255,255,0.06);
+  --side-max-width: 260px;
+  --side-min-width: 260px;
+}
+
+/* ── Buttons ───────────────────────────────────────────────────────────────── */
+ion-button.gold-btn {
+  --background: linear-gradient(135deg, #f97316 0%, #fb923c 100%);
+  --color: #fff;
+  --border-radius: 14px;
+  --box-shadow: 0 4px 20px rgba(249,115,22,0.35);
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  transition: opacity 0.2s ease;
+
+  &:hover { --box-shadow: 0 6px 28px rgba(249,115,22,0.5); }
+}
+
+ion-fab-button.gold-fab {
+  --background: linear-gradient(135deg, #f97316 0%, #fb923c 100%);
+  --color: #fff;
+  --box-shadow: 0 4px 20px rgba(249,115,22,0.4);
+}
+
+/* ── Form Inputs ───────────────────────────────────────────────────────────── */
+ion-item.glass-input {
+  --background: rgba(255, 255, 255, 0.03);
+  --border-radius: 12px;
+  --border-color: rgba(255, 255, 255, 0.08);
+  --border-width: 1px;
+  --border-style: solid;
+  --color: #f1f5f9;
+  margin-bottom: 10px;
+  border-radius: 12px;
+  transition: border-color 0.2s ease;
+
+  &:focus-within {
+    --border-color: rgba(249,115,22,0.4);
+  }
+}
+
+ion-item.glass-input ion-label {
+  color: #64748b !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+}
+
+ion-searchbar.luxury-searchbar {
+  --background: rgba(255, 255, 255, 0.05);
+  --border-radius: 14px;
+  --color: #f1f5f9;
+  --placeholder-color: #64748b;
+  --icon-color: #64748b;
+}
+
+/* ── Loader ─────────────────────────────────────────────────────────────────── */
+.loader-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 60vh;
+  gap: 16px;
+  color: #94a3b8;
+
+  p { font-size: 14px; font-weight: 500; margin: 0; }
+}
+
+.luxury-spinner {
+  width: 48px;
+  height: 48px;
+  border: 3px solid rgba(249,115,22,0.15);
+  border-top-color: #f97316;
+  border-radius: 50%;
+  animation: spin 0.9s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── Empty State ────────────────────────────────────────────────────────────── */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 24px;
+  text-align: center;
+
+  .icon-circle {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 36px;
+    margin-bottom: 20px;
+  }
+
+  .success-circle { background: rgba(16,185,129,0.1); color: #10B981; }
+  .empty-circle   { background: rgba(249,115,22,0.1); color: #f97316; }
+
+  h3 { color: #f1f5f9; font-size: 18px; font-weight: 700; margin: 0 0 8px; }
+  p  { color: #64748b; font-size: 14px; margin: 0; line-height: 1.5; }
+}
+
+/* ── List items ─────────────────────────────────────────────────────────────── */
+.luxury-items-list { background: transparent !important; }
+
+.list-card {
+  --background: transparent;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  cursor: pointer;
+
+  .item-image {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.08);
+    flex-shrink: 0;
+    background: rgba(255,255,255,0.03);
+
+    img { width: 100%; height: 100%; object-fit: cover; }
+  }
+
+  .item-details {
+    flex: 1;
+    min-width: 0;
+    h4 { font-size: 14px; font-weight: 700; color: #f1f5f9; margin: 0 0 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    p  { font-size: 12px; color: #64748b; margin: 0; span { color: #94a3b8; } }
+  }
+
+  .item-badge {
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  .danger-badge {
+    background: rgba(239,68,68,0.12);
+    color: #ef4444;
+    border: 1px solid rgba(239,68,68,0.2);
+  }
+}
+
+/* ── Sales List ──────────────────────────────────────────────────────────────── */
+.sales-list-container { padding-bottom: 80px; }
+
+.sale-item {
+  margin-bottom: 8px !important;
+
+  .receipt-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: rgba(249,115,22,0.12);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    color: #f97316;
+    margin-right: 4px;
+  }
+
+  h2.sale-id { font-size: 14px; font-weight: 700; color: #f1f5f9; margin-bottom: 4px;
+    span { color: #f97316; } }
+
+  p.sale-date { font-size: 12px; color: #64748b; display: flex; align-items: center; gap: 4px;
+    ion-icon { font-size: 12px; } }
+
+  .sale-stats { text-align: right; }
+  .total-price { font-size: 15px; font-weight: 800; color: #10B981; margin-bottom: 4px; }
+  .profit-badge { font-size: 11px; color: #64748b; margin-bottom: 4px; }
+}
+
+/* ── Products List ───────────────────────────────────────────────────────────── */
+.products-list-container { padding-bottom: 80px; }
+
+/* ── Add button (list) ───────────────────────────────────────────────────────── */
+.add-btn {
+  --padding-end: 4px;
+  font-size: 26px;
+}

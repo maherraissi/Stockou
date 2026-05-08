@@ -1,0 +1,79 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar class="luxury-toolbar">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/dashboard" color="primary"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="luxury-title text-gradient-gold">Clôture de Caisse</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding" style="--background: #0f172a;">
+  <div *ngIf="isLoading" class="loader-container">
+    <div class="luxury-spinner"></div>
+  </div>
+
+  <div *ngIf="!isLoading">
+    <div class="glass-card info-card" style="margin-bottom: 24px; text-align: center;">
+      <ion-icon name="moon-outline" style="font-size: 48px; color: #F59E0B; margin-bottom: 16px;"></ion-icon>
+      <h2 style="margin: 0 0 8px; font-weight: 700; color: #fff;">Fin de Session</h2>
+      <p style="color: #94a3b8; font-size: 14px; margin: 0;">
+        Fermez votre caisse pour enregistrer le rapport journalier (Z-Report) et réinitialiser les compteurs.
+      </p>
+    </div>
+
+    <h3 class="section-title">Résumé de la Session</h3>
+    <div class="stats-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px;">
+      
+      <div class="glass-card kpi-card">
+        <div class="kpi-icon sales"><ion-icon name="cash-outline"></ion-icon></div>
+        <div class="kpi-content">
+          <p class="kpi-label">Total Ventes</p>
+          <h3 class="kpi-value text-gradient-gold">{{ stats.totalVentes | number:'1.0-3' }} DT</h3>
+        </div>
+      </div>
+
+      <div class="glass-card kpi-card">
+        <div class="kpi-icon qty"><ion-icon name="cart-outline"></ion-icon></div>
+        <div class="kpi-content">
+          <p class="kpi-label">Nb. Ventes</p>
+          <h3 class="kpi-value text-gradient-blue">{{ stats.nombreVentes }}</h3>
+        </div>
+      </div>
+
+    </div>
+
+    <h3 class="section-title">Contrôle de Caisse</h3>
+    <div class="glass-card info-card">
+      <p style="color: #94a3b8; font-size: 13px; margin: 0 0 12px;">Combien d'espèces y a-t-il réellement dans le tiroir-caisse actuellement ? (Optionnel)</p>
+      
+      <ion-item class="glass-input" lines="none" style="border-radius: 12px; margin-bottom: 16px;">
+        <ion-label position="stacked">Montant compté (Espèces)</ion-label>
+        <ion-input type="number" [(ngModel)]="montantSaisi" placeholder="Ex: 125.500"></ion-input>
+        <span slot="end" style="color: #64748b; font-weight: 600; margin-top: 24px;">DT</span>
+      </ion-item>
+
+      <div *ngIf="montantSaisi !== null" style="padding: 12px; border-radius: 8px; background: rgba(0,0,0,0.2);">
+        <p style="margin: 0; font-size: 14px; display: flex; justify-content: space-between;">
+          <span style="color: #94a3b8;">Théorique :</span>
+          <span style="color: #fff; font-weight: 600;">{{ stats.totalVentes | number:'1.0-3' }} DT</span>
+        </p>
+        <p style="margin: 8px 0 0; font-size: 14px; display: flex; justify-content: space-between;">
+          <span style="color: #94a3b8;">Écart :</span>
+          <span [ngStyle]="{'color': (montantSaisi - stats.totalVentes) >= 0 ? '#10b981' : '#ef4444', 'font-weight': '600'}">
+            {{ (montantSaisi - stats.totalVentes) > 0 ? '+' : '' }}{{ (montantSaisi - stats.totalVentes) | number:'1.0-3' }} DT
+          </span>
+        </p>
+      </div>
+    </div>
+
+  </div>
+</ion-content>
+
+<ion-footer class="ion-no-border" style="background: #0f172a;">
+  <ion-toolbar style="--background: transparent; padding: 10px 16px;">
+    <ion-button expand="block" class="gold-btn" (click)="doCloture()" [disabled]="isLoading || stats.nombreVentes === 0">
+      Clôturer la Caisse
+      <ion-icon name="checkmark-circle-outline" slot="end"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>

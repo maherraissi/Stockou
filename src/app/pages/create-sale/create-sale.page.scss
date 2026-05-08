@@ -1,0 +1,286 @@
+// POS create-sale SCSS
+$primary-orange: #F97316;
+$primary-green: #10B981;
+
+.pos-content {
+  --background: #0f172a;
+}
+
+// ── Search Container ────────────────────────────────────────────────────────
+.search-container {
+  background: rgba(15, 23, 42, 0.95);
+  backdrop-filter: blur(12px);
+  padding: 8px 12px 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+
+  ion-searchbar {
+    --background: rgba(255, 255, 255, 0.05);
+    --border-radius: 12px;
+    --color: #f1f5f9;
+    --placeholder-color: #64748b;
+    --icon-color: #64748b;
+    --cancel-button-color: $primary-orange;
+    padding: 0;
+  }
+
+  ion-button {
+    --border-radius: 12px;
+    height: 44px;
+    font-weight: 600;
+    font-size: 14px;
+  }
+}
+
+// ── Search Results Overlay ─────────────────────────────────────────────────
+.search-results-overlay {
+  position: absolute;
+  top: 0;
+  left: 12px;
+  right: 12px;
+  z-index: 100;
+  max-height: 340px;
+  overflow-y: auto;
+  margin: 8px 0 0 !important;
+  padding: 4px 0 !important;
+  border-radius: 16px !important;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5) !important;
+}
+
+.results-list { background: transparent !important; }
+
+.result-item {
+  --background: transparent;
+  --border-radius: 0;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+
+  &:last-child { border-bottom: none; }
+
+  &:hover { --background: rgba(249,115,22,0.06); }
+}
+
+.result-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.08);
+
+  img { object-fit: cover; width: 100%; height: 100%; }
+}
+
+.result-name { font-weight: 600; color: #f1f5f9; font-size: 14px; }
+.result-price { color: $primary-orange; font-weight: 600; }
+.stock-info { color: #64748b; font-size: 11px; }
+
+.add-icon {
+  font-size: 22px;
+  color: $primary-orange;
+}
+
+// ── Cart Container ──────────────────────────────────────────────────────────
+.cart-container { padding: 8px 0 120px; }
+
+.section-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin: 16px 16px 10px;
+}
+
+// ── Empty State ─────────────────────────────────────────────────────────────
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  text-align: center;
+  margin: 12px !important;
+
+  .icon-circle {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    margin-bottom: 16px;
+  }
+
+  .empty-circle { background: rgba(249,115,22,0.08); color: $primary-orange; }
+
+  h3 { color: #f1f5f9; font-size: 18px; font-weight: 700; margin: 0 0 6px; }
+  p  { color: #64748b; font-size: 14px; margin: 0; }
+}
+
+// ── Cart Items ──────────────────────────────────────────────────────────────
+.cart-list { padding: 0 12px; }
+.luxury-items-list { background: transparent !important; }
+
+.slide-item {
+  margin-bottom: 10px;
+  border-radius: 16px !important;
+  overflow: hidden;
+}
+
+.list-item {
+  --background: rgba(255, 255, 255, 0.04);
+  --border-radius: 16px;
+  --padding-start: 14px;
+  --padding-end: 8px;
+  --min-height: 68px;
+}
+
+.cart-item-label {
+  h2.item-name {
+    font-size: 14px;
+    font-weight: 700;
+    color: #f1f5f9;
+    margin-bottom: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  p.item-price {
+    color: $primary-orange;
+    font-size: 13px;
+    font-weight: 600;
+  }
+}
+
+.per-unit { color: #64748b; font-size: 11px; font-weight: 400; }
+
+// ── Quantity Controls ────────────────────────────────────────────────────────
+.quantity-controls {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.qty-btn {
+  --padding-start: 4px;
+  --padding-end: 4px;
+  font-size: 26px;
+  color: $primary-orange;
+}
+
+.qty {
+  font-size: 16px;
+  font-weight: 800;
+  color: #f1f5f9;
+  min-width: 28px;
+  text-align: center;
+}
+
+.delete-option { --background: rgba(239,68,68,0.8); }
+
+// ── Form Sections (discount, client, totals) ────────────────────────────────
+.discount-section {
+  margin: 10px 0 !important;
+  padding: 4px 0 !important;
+  border-radius: 16px !important;
+
+  ion-item.glass-input {
+    --background: transparent;
+    --border-radius: 0;
+    --border-color: transparent;
+    --color: #f1f5f9;
+    --padding-start: 12px;
+  }
+
+  ion-label { color: #94a3b8 !important; font-size: 12px !important; }
+  ion-input  { color: #f1f5f9 !important; font-weight: 600; }
+  ion-note   { color: $primary-orange !important; font-weight: 700; font-size: 15px; }
+}
+
+.input-icon { color: #64748b; font-size: 18px; margin-right: 4px; }
+
+.discount-input {
+  border-bottom: 1px solid rgba(255,255,255,0.05) !important;
+  &:last-child { border-bottom: none !important; }
+}
+
+// ── Footer ───────────────────────────────────────────────────────────────────
+.floating-checkout-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+}
+
+.luxury-footer {
+  background: rgba(15, 23, 42, 0.98);
+  backdrop-filter: blur(16px);
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+  padding: 12px 16px 16px;
+  /* Support for bottom safe area on mobile devices */
+  padding-bottom: calc(16px + env(safe-area-inset-bottom));
+}
+
+.total-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.total-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.total-amount {
+  font-size: 22px;
+  font-weight: 900;
+  color: $primary-orange;
+  letter-spacing: -0.5px;
+}
+
+.checkout-btn {
+  height: 52px;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+
+// ── Loader ────────────────────────────────────────────────────────────────────
+.loader-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 60vh;
+  gap: 16px;
+  color: #94a3b8;
+}
+
+.luxury-spinner {
+  width: 44px;
+  height: 44px;
+  border: 3px solid rgba(249,115,22,0.2);
+  border-top-color: $primary-orange;
+  border-radius: 50%;
+  animation: spin 0.9s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+// ── Responsive ────────────────────────────────────────────────────────────────
+@media (min-width: 768px) {
+  .search-container {
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .cart-container {
+    max-width: 700px;
+    margin: 0 auto;
+  }
+}

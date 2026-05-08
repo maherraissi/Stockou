@@ -1,0 +1,144 @@
+// Sales page SCSS
+$primary-orange: #F97316;
+$primary-green:  #10B981;
+
+.sales-list-container {
+  padding: 8px 0 88px;
+}
+
+.luxury-items-list { background: transparent !important; }
+
+// ── Sale Card ────────────────────────────────────────────────────────────────
+.list-item.sale-item {
+  --background: rgba(255,255,255,0.03);
+  --border-radius: 18px;
+  --padding-start: 14px;
+  --inner-padding-end: 12px;
+  --padding-top: 12px;
+  --padding-bottom: 12px;
+  --min-height: 76px;
+  margin: 0 12px 10px;
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,0.06);
+  display: block;
+  transition: background 0.2s ease;
+
+  &:hover { --background: rgba(249,115,22,0.04); }
+}
+
+.receipt-icon {
+  width: 46px;
+  height: 46px;
+  border-radius: 13px;
+  background: rgba(249,115,22,0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  color: $primary-orange;
+  flex-shrink: 0;
+  margin-right: 12px;
+}
+
+h2.sale-id {
+  font-size: 14px;
+  font-weight: 700;
+  color: #f1f5f9;
+  margin: 0 0 4px;
+
+  span { color: $primary-orange; }
+}
+
+p.sale-date {
+  font-size: 12px;
+  color: #64748b;
+  margin: 0 0 2px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+
+  ion-icon { font-size: 11px; }
+}
+
+.sale-stats {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+
+  .total-price {
+    font-size: 15px;
+    font-weight: 800;
+    color: $primary-green;
+  }
+
+  .profit-badge {
+    font-size: 11px;
+    color: #64748b;
+    font-weight: 500;
+  }
+
+  .action-buttons {
+    display: flex;
+    gap: 4px;
+    margin-top: 4px;
+  }
+
+  ion-button {
+    --padding-start: 6px;
+    --padding-end: 6px;
+    font-size: 10px;
+    font-weight: 700;
+    height: 30px;
+    --border-radius: 8px;
+    margin: 0;
+  }
+}
+
+// ── Loader / Empty ───────────────────────────────────────────────────────────
+.loader-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 60vh;
+  gap: 16px;
+  color: #94a3b8;
+
+  p { font-size: 14px; font-weight: 500; margin: 0; }
+}
+
+.luxury-spinner {
+  width: 48px;
+  height: 48px;
+  border: 3px solid rgba(249,115,22,0.15);
+  border-top-color: $primary-orange;
+  border-radius: 50%;
+  animation: spin 0.9s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 24px;
+  text-align: center;
+
+  .icon-circle {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 36px;
+    margin-bottom: 20px;
+  }
+
+  .empty-circle { background: rgba(249,115,22,0.08); color: $primary-orange; }
+  h3 { color: #f1f5f9; font-size: 18px; font-weight: 700; margin: 0 0 8px; }
+  p  { color: #64748b; font-size: 14px; margin: 0; }
+}

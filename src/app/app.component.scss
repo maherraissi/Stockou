@@ -1,0 +1,107 @@
+.luxury-split-pane {
+  --border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.luxury-menu {
+  --background: rgba(10, 10, 10, 0.95);
+  border-right: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.luxury-toolbar {
+  --background: transparent;
+  padding-top: 16px;
+}
+
+.luxury-title {
+  display: flex;
+  align-items: center;
+  font-weight: 800;
+  font-size: 1.5rem;
+  letter-spacing: -0.5px;
+}
+
+.logo-icon {
+  margin-right: 8px;
+  color: #D4AF37;
+  font-size: 1.4rem;
+}
+
+.luxury-menu-content {
+  --background: transparent;
+}
+
+.menu-header-spacer {
+  height: 20px;
+}
+
+.luxury-list {
+  background: transparent;
+  padding: 0 16px;
+
+  ion-item {
+    --background: transparent;
+    --border-radius: 12px;
+    --padding-start: 12px;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #A1A1AA;
+    transition: all 0.3s ease;
+
+    .icon-box {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.05);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 16px;
+      transition: all 0.3s ease;
+
+      ion-icon {
+        font-size: 18px;
+        color: #A1A1AA;
+      }
+    }
+
+    &:hover {
+      --background: rgba(255, 255, 255, 0.03);
+    }
+
+    &.selected-item {
+      --background: rgba(212, 175, 55, 0.1);
+      color: #FFFFFF;
+      font-weight: 600;
+
+      .icon-box {
+        background: linear-gradient(135deg, #FFD700 0%, #D4AF37 100%);
+        box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+
+        ion-icon {
+          color: #000;
+        }
+      }
+    }
+  }
+}
+
+.menu-divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.05);
+  margin: 16px 0;
+}
+
+.menu-footer {
+  position: absolute;
+  bottom: 24px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  
+  .version {
+    font-size: 0.8rem;
+    color: #666;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+}

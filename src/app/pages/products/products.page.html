@@ -1,0 +1,111 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar class="luxury-toolbar">
+    <ion-buttons slot="start">
+      <ion-menu-button color="primary"></ion-menu-button>
+    </ion-buttons>
+    <ion-title class="luxury-title text-gradient-gold">Produits</ion-title>
+    <ion-buttons slot="end">
+      <ion-button class="add-btn" routerLink="/add-product">
+        <ion-icon slot="icon-only" name="add-circle"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+  <div class="search-container">
+    <ion-searchbar
+      [value]="searchQuery"
+      (ionInput)="filterProducts($event)"
+      (ionClear)="filterProducts($event)"
+      placeholder="Rechercher produit, ref, code-barres…"
+      animated="true"
+      debounce="0"
+      class="luxury-searchbar"
+      mode="ios">
+    </ion-searchbar>
+  </div>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-refresher slot="fixed" (ionRefresh)="loadProducts(); $event.target.complete()">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <!-- DB Error -->
+  <div *ngIf="dbError" class="loader-container">
+    <div class="glass-card" style="padding:20px;text-align:center;max-width:380px;">
+      <ion-icon name="warning" style="font-size:40px;color:#ef4444;margin-bottom:12px;"></ion-icon>
+      <p style="color:#94a3b8;margin:0 0 16px;word-break:break-word;">{{ dbError }}</p>
+      <ion-button expand="block" color="primary" (click)="retryDb()">Relancer</ion-button>
+    </div>
+  </div>
+
+  <!-- Loading -->
+  <div *ngIf="isLoading && !dbError" class="loader-container">
+    <div class="luxury-spinner"></div>
+    <p>Chargement du catalogue…</p>
+  </div>
+
+  <!-- Empty state -->
+  <div *ngIf="!isLoading && !dbError && filteredProducts.length === 0" class="empty-state glass-card">
+    <div class="icon-circle empty-circle">
+      <ion-icon name="cube-outline"></ion-icon>
+    </div>
+    <h3>{{ searchQuery ? 'Aucun résultat' : 'Catalogue vide' }}</h3>
+    <p>{{ searchQuery ? 'Aucun produit ne correspond à votre recherche.' : 'Ajoutez votre premier produit pour commencer.' }}</p>
+    <ion-button class="gold-btn" routerLink="/add-product" style="margin-top:20px;" *ngIf="!searchQuery">
+      <ion-icon name="add" slot="start"></ion-icon>
+      Ajouter un produit
+    </ion-button>
+  </div>
+
+  <!-- Products List -->
+  <div class="products-list-container" *ngIf="!isLoading && !dbError && filteredProducts.length > 0">
+    <ion-list class="luxury-items-list" lines="none">
+
+      <ion-item-sliding *ngFor="let product of filteredProducts" class="slide-item">
+        <ion-item
+          class="list-item"
+          [routerLink]="['/add-product']"
+          [queryParams]="{id: product.id}"
+          detail="false">
+
+          <div class="item-image" slot="start">
+            <img [src]="product.imagePath || 'assets/placeholder.png'" alt="{{ product.nom }}" />
+          </div>
+
+          <ion-label>
+            <h2 class="product-name">{{ product.nom }}</h2>
+            <p class="product-ref">{{ product.reference }}</p>
+          </ion-label>
+
+          <div slot="end" class="product-stats">
+            <span class="price">{{ product.prixVente | number:'1.0-3' }} DT</span>
+            <span class="stock-badge"
+              [class.success]="product.stock > product.stockMin"
+              [class.danger]="product.stock > 0 && product.stock <= product.stockMin"
+              [class.zero]="product.stock === 0">
+              {{ product.stock === 0 ? 'Rupture' : product.stock + ' en stock' }}
+            </span>
+          </div>
+        </ion-item>
+
+        <ion-item-options side="end">
+          <ion-item-option color="primary"
+            [routerLink]="['/add-product']"
+            [queryParams]="{id: product.id}">
+            <ion-icon slot="icon-only" name="create"></ion-icon>
+          </ion-item-option>
+          <ion-item-option color="danger" (click)="deleteProduct(product.id)" class="delete-option">
+            <ion-icon slot="icon-only" name="trash"></ion-icon>
+          </ion-item-option>
+        </ion-item-options>
+      </ion-item-sliding>
+
+    </ion-list>
+  </div>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button routerLink="/add-product" class="gold-fab">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

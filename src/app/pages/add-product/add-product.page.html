@@ -1,0 +1,103 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar class="luxury-toolbar">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/products" color="primary"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="luxury-title text-gradient-gold">{{ isEditMode ? 'Modifier le produit' : 'Ajouter un produit' }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <div *ngIf="isLoading" class="loader-container">
+    <div class="luxury-spinner"></div>
+    <p>Chargement de la fiche produit...</p>
+  </div>
+
+  <div class="form-container" *ngIf="!isLoading">
+    
+    <!-- Image Upload Area -->
+    <div class="image-section" (click)="takePicture()">
+      <div class="image-wrapper" [class.has-image]="product.imagePath">
+        <img *ngIf="product.imagePath" [src]="product.imagePath" class="product-image" />
+        <div class="upload-placeholder" *ngIf="!product.imagePath">
+          <div class="icon-circle">
+            <ion-icon name="camera"></ion-icon>
+          </div>
+          <p>Ajouter une photo</p>
+        </div>
+        <div class="image-overlay" *ngIf="product.imagePath">
+          <ion-icon name="create"></ion-icon>
+          <span>Modifier</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Product Details Form -->
+    <div class="glass-card form-card">
+      <ion-list class="form-list" lines="none">
+        
+        <ion-item class="glass-input">
+          <ion-label position="stacked">Nom du produit <span class="required">*</span></ion-label>
+          <ion-input [(ngModel)]="product.nom" name="nom" type="text" placeholder="Ex: Eau minerale 1,5L" required></ion-input>
+          <ion-icon slot="start" name="cube-outline" class="input-icon"></ion-icon>
+        </ion-item>
+
+        <ion-item class="glass-input">
+          <ion-label position="stacked">Reference <span class="required">*</span></ion-label>
+          <ion-input [(ngModel)]="product.reference" name="reference" type="text" placeholder="Ex: REF-12345" required></ion-input>
+          <ion-icon slot="start" name="barcode-outline" class="input-icon"></ion-icon>
+        </ion-item>
+
+        <ion-item class="glass-input">
+          <ion-label position="stacked">Code-barres</ion-label>
+          <ion-input [(ngModel)]="product.codeBarre" name="codeBarre" type="text" placeholder="EAN ou code interne"></ion-input>
+          <ion-icon slot="start" name="scan-outline" class="input-icon"></ion-icon>
+          <ion-button slot="end" fill="clear" color="primary" (click)="scanBarcode()">
+            Scanner
+          </ion-button>
+        </ion-item>
+
+        <ion-row>
+          <ion-col size="6">
+            <ion-item class="glass-input">
+              <ion-label position="stacked">Prix d achat</ion-label>
+              <ion-input [(ngModel)]="product.prixAchat" name="prixAchat" type="number" min="0" step="any" placeholder=""></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="6">
+            <ion-item class="glass-input">
+              <ion-label position="stacked">Prix de vente</ion-label>
+              <ion-input [(ngModel)]="product.prixVente" name="prixVente" type="number" min="0" step="any" placeholder=""></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col size="6">
+            <ion-item class="glass-input stock-input">
+              <ion-label position="stacked">Quantite en stock</ion-label>
+              <ion-input [(ngModel)]="product.stock" name="stock" type="number" min="0" placeholder="0" (ngModelChange)="onStockChange()"></ion-input>
+              <ion-icon slot="start" name="layers-outline" class="input-icon"></ion-icon>
+            </ion-item>
+          </ion-col>
+          <ion-col size="6">
+            <ion-item class="glass-input stock-input">
+              <ion-label position="stacked">Seuil d alerte</ion-label>
+              <ion-input [(ngModel)]="product.stockMin" name="stockMin" type="number" min="0" placeholder="0"></ion-input>
+              <ion-icon slot="start" name="alert-circle-outline" class="input-icon"></ion-icon>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+
+      </ion-list>
+    </div>
+
+    <div class="action-section">
+      <ion-button expand="block" class="gold-btn save-btn" (click)="saveProduct()">
+        <ion-icon slot="start" [name]="isEditMode ? 'checkmark-circle' : 'add-circle'"></ion-icon>
+        {{ isEditMode ? 'Enregistrer les modifications' : 'Ajouter au stock' }}
+      </ion-button>
+    </div>
+
+  </div>
+</ion-content>

@@ -1,0 +1,15 @@
+services:
+  db:
+    image: postgres:16
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: stockou
+      POSTGRES_USER: stockou
+      POSTGRES_PASSWORD: stockou
+    ports:
+      - "5432:5432"
+    volumes:
+      - stockou_pgdata:/var/lib/postgresql/data
+
+volumes:
+  stockou_pgdata:

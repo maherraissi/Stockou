@@ -1,0 +1,193 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar class="luxury-toolbar">
+    <ion-buttons slot="start">
+      <ion-menu-button color="primary"></ion-menu-button>
+    </ion-buttons>
+    <ion-title class="luxury-title text-gradient-gold">Parametres</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div *ngIf="isLoading" class="loader-container">
+    <div class="luxury-spinner"></div>
+    <p>Traitement en cours...</p>
+  </div>
+
+  <div class="settings-container" *ngIf="!isLoading">
+
+    <div class="section-group">
+      <h3 class="section-title">Magasin</h3>
+      <div class="glass-card info-card">
+        <ion-item class="glass-input" lines="none">
+          <ion-label position="stacked">Nom du magasin</ion-label>
+          <ion-input [(ngModel)]="settings.nomMagasin" placeholder="Nom affiche sur les documents"></ion-input>
+        </ion-item>
+        <ion-item class="glass-input" lines="none">
+          <ion-label position="stacked">Devise</ion-label>
+          <ion-input [(ngModel)]="settings.devise" placeholder="DT"></ion-input>
+        </ion-item>
+
+        <div class="glass-card action-card" (click)="chooseLogo()" style="margin: 16px 0 0 0;">
+          <div class="card-icon import">
+            <ion-icon name="image-outline"></ion-icon>
+          </div>
+          <div class="card-content">
+            <h3>Logo du magasin</h3>
+            <p>{{ settings.logoPath ? 'Logo charge localement' : 'Ajouter un logo ou une photo' }}</p>
+          </div>
+        </div>
+
+        <img *ngIf="settings.logoPath" [src]="settings.logoPath" alt="Logo magasin" style="width:88px;height:88px;border-radius:16px;object-fit:cover;margin-top:16px;">
+
+        <ion-button expand="block" class="gold-btn" style="margin-top:16px;" (click)="saveSettings()">
+          Enregistrer les parametres
+        </ion-button>
+      </div>
+    </div>
+
+    <div class="section-group">
+      <h3 class="section-title">Operations</h3>
+      
+      <div class="glass-card action-card" (click)="fileInput.click()">
+        <div class="card-icon import">
+          <ion-icon name="cloud-upload"></ion-icon>
+        </div>
+        <div class="card-content">
+          <h3>Importer des produits</h3>
+          <p>Charger un fichier Excel local au format .xlsx</p>
+        </div>
+        <ion-icon name="chevron-forward" class="arrow"></ion-icon>
+        <input type="file" #fileInput (change)="onFileSelected($event)" accept=".xlsx, .xls" hidden>
+      </div>
+
+      <div class="glass-card action-card" (click)="exportData()">
+        <div class="card-icon export">
+          <ion-icon name="cloud-download"></ion-icon>
+        </div>
+        <div class="card-content">
+          <h3>Exporter le stock</h3>
+          <p>Generer un fichier Excel des produits</p>
+        </div>
+        <ion-icon name="chevron-forward" class="arrow"></ion-icon>
+      </div>
+
+      <div class="glass-card action-card" (click)="exportSales()">
+        <div class="card-icon export">
+          <ion-icon name="receipt-outline"></ion-icon>
+        </div>
+        <div class="card-content">
+          <h3>Exporter les ventes</h3>
+          <p>Generer un fichier Excel de l historique</p>
+        </div>
+        <ion-icon name="chevron-forward" class="arrow"></ion-icon>
+      </div>
+    </div>
+
+    <!-- ── Mapping Modal ─────────────────────────────────────────────────── -->
+    <ion-modal [isOpen]="isMappingModalOpen" (didDismiss)="cancelImport()">
+      <ng-template>
+        <ion-header class="ion-no-border">
+          <ion-toolbar class="luxury-toolbar">
+            <ion-title class="luxury-title text-gradient-gold">Mappage des colonnes</ion-title>
+            <ion-buttons slot="end">
+              <ion-button (click)="cancelImport()" color="danger">Annuler</ion-button>
+            </ion-buttons>
+          </ion-toolbar>
+        </ion-header>
+
+        <ion-content style="--background: #0f172a;">
+          <div style="padding: 16px;">
+            <div class="glass-card info-card" style="margin-bottom: 20px;">
+              <ion-item lines="none" style="--background: transparent; --color: #e2e8f0;">
+                <ion-label class="ion-text-wrap">
+                  <h3 style="font-weight: 600;">Mon fichier a des entetes</h3>
+                  <p style="color: #94a3b8; font-size: 13px;">Decochez si la premiere ligne contient directement les produits.</p>
+                </ion-label>
+                <ion-checkbox slot="end" [(ngModel)]="hasHeaders" (ionChange)="onHasHeadersChange()" style="--checkbox-background-checked: #F97316;"></ion-checkbox>
+              </ion-item>
+            </div>
+
+            <h3 class="section-title" style="margin-left: 0;">Correspondance</h3>
+            <p style="color: #94a3b8; font-size: 13px; margin: 0 0 16px;">
+              Associez chaque information de Stockou a la colonne correspondante dans votre fichier.
+            </p>
+
+            <div class="mapping-list">
+              <!-- Nom -->
+              <ion-item class="glass-input" lines="none" style="margin-bottom: 12px; border-radius: 12px;">
+                <ion-label position="stacked">Nom du produit <span style="color:#ef4444">*</span></ion-label>
+                <ion-select [(ngModel)]="mapping['nom']" interface="popover" placeholder="Selectionner" style="width: 100%;">
+                  <ion-select-option [value]="-1">-- Ignorer --</ion-select-option>
+                  <ion-select-option *ngFor="let h of excelHeaders; let i = index" [value]="i">{{ h }}</ion-select-option>
+                </ion-select>
+              </ion-item>
+
+              <!-- Reference -->
+              <ion-item class="glass-input" lines="none" style="margin-bottom: 12px; border-radius: 12px;">
+                <ion-label position="stacked">Reference <span style="color:#ef4444">*</span></ion-label>
+                <ion-select [(ngModel)]="mapping['reference']" interface="popover" placeholder="Selectionner" style="width: 100%;">
+                  <ion-select-option [value]="-1">-- Ignorer --</ion-select-option>
+                  <ion-select-option *ngFor="let h of excelHeaders; let i = index" [value]="i">{{ h }}</ion-select-option>
+                </ion-select>
+              </ion-item>
+
+              <!-- Code Barre -->
+              <ion-item class="glass-input" lines="none" style="margin-bottom: 12px; border-radius: 12px;">
+                <ion-label position="stacked">Code-barres</ion-label>
+                <ion-select [(ngModel)]="mapping['codeBarre']" interface="popover" placeholder="Selectionner" style="width: 100%;">
+                  <ion-select-option [value]="-1">-- Ignorer --</ion-select-option>
+                  <ion-select-option *ngFor="let h of excelHeaders; let i = index" [value]="i">{{ h }}</ion-select-option>
+                </ion-select>
+              </ion-item>
+
+              <!-- Prix Achat -->
+              <ion-item class="glass-input" lines="none" style="margin-bottom: 12px; border-radius: 12px;">
+                <ion-label position="stacked">Prix d'achat</ion-label>
+                <ion-select [(ngModel)]="mapping['prixAchat']" interface="popover" placeholder="Selectionner" style="width: 100%;">
+                  <ion-select-option [value]="-1">-- Ignorer --</ion-select-option>
+                  <ion-select-option *ngFor="let h of excelHeaders; let i = index" [value]="i">{{ h }}</ion-select-option>
+                </ion-select>
+              </ion-item>
+
+              <!-- Prix Vente -->
+              <ion-item class="glass-input" lines="none" style="margin-bottom: 12px; border-radius: 12px;">
+                <ion-label position="stacked">Prix de vente</ion-label>
+                <ion-select [(ngModel)]="mapping['prixVente']" interface="popover" placeholder="Selectionner" style="width: 100%;">
+                  <ion-select-option [value]="-1">-- Ignorer --</ion-select-option>
+                  <ion-select-option *ngFor="let h of excelHeaders; let i = index" [value]="i">{{ h }}</ion-select-option>
+                </ion-select>
+              </ion-item>
+
+              <!-- Stock -->
+              <ion-item class="glass-input" lines="none" style="margin-bottom: 12px; border-radius: 12px;">
+                <ion-label position="stacked">Stock actuel</ion-label>
+                <ion-select [(ngModel)]="mapping['stock']" interface="popover" placeholder="Selectionner" style="width: 100%;">
+                  <ion-select-option [value]="-1">-- Ignorer --</ion-select-option>
+                  <ion-select-option *ngFor="let h of excelHeaders; let i = index" [value]="i">{{ h }}</ion-select-option>
+                </ion-select>
+              </ion-item>
+              
+              <!-- Stock Min -->
+              <ion-item class="glass-input" lines="none" style="margin-bottom: 12px; border-radius: 12px;">
+                <ion-label position="stacked">Stock Minimum</ion-label>
+                <ion-select [(ngModel)]="mapping['stockMin']" interface="popover" placeholder="Selectionner" style="width: 100%;">
+                  <ion-select-option [value]="-1">-- Ignorer --</ion-select-option>
+                  <ion-select-option *ngFor="let h of excelHeaders; let i = index" [value]="i">{{ h }}</ion-select-option>
+                </ion-select>
+              </ion-item>
+            </div>
+          </div>
+        </ion-content>
+
+        <ion-footer class="ion-no-border" style="background: #0f172a;">
+          <ion-toolbar style="--background: transparent; padding: 10px 16px;">
+            <ion-button expand="block" class="gold-btn" (click)="confirmImport()">
+              Confirmer l'importation
+            </ion-button>
+          </ion-toolbar>
+        </ion-footer>
+      </ng-template>
+    </ion-modal>
+
+  </div>
+</ion-content>

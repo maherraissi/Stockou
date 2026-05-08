@@ -1,0 +1,87 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar class="luxury-toolbar">
+    <ion-buttons slot="start">
+      <ion-menu-button color="primary"></ion-menu-button>
+    </ion-buttons>
+    <ion-title class="luxury-title text-gradient-gold">Ventes</ion-title>
+    <ion-buttons slot="end">
+      <ion-button routerLink="/create-sale" class="add-btn">
+        <ion-icon slot="icon-only" name="add-circle"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+  <div class="search-container">
+    <ion-searchbar
+      [value]="searchQuery"
+      (ionInput)="filterSales($event)"
+      (ionClear)="filterSales($event)"
+      placeholder="Rechercher par N°, client, date..."
+      animated="true"
+      debounce="0"
+      class="luxury-searchbar"
+      mode="ios">
+    </ion-searchbar>
+  </div>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-refresher slot="fixed" (ionRefresh)="loadSales(); $event.target.complete()">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <div *ngIf="isLoading" class="loader-container">
+    <div class="luxury-spinner"></div>
+    <p>Chargement des ventes...</p>
+  </div>
+
+  <div *ngIf="!isLoading && filteredSales.length === 0" class="empty-state glass-card">
+    <div class="icon-circle empty-circle">
+      <ion-icon name="wallet-outline"></ion-icon>
+    </div>
+    <h3>{{ searchQuery ? 'Aucun résultat' : 'Aucune vente enregistrée' }}</h3>
+    <p>{{ searchQuery ? 'Aucune vente ne correspond à votre recherche.' : 'Les transactions apparaîtront ici après validation.' }}</p>
+    <ion-button class="gold-btn" routerLink="/create-sale" style="margin-top: 20px;" *ngIf="!searchQuery">
+      <ion-icon name="add" slot="start"></ion-icon>
+      Nouvelle vente
+    </ion-button>
+  </div>
+
+  <div class="sales-list-container" *ngIf="!isLoading && filteredSales.length > 0">
+    <ion-list class="luxury-items-list" lines="none">
+      <ion-item *ngFor="let sale of filteredSales" 
+                class="glass-card list-item sale-item" 
+                [routerLink]="['/sale-detail', sale.id]">
+        <div class="receipt-icon" slot="start">
+          <ion-icon name="receipt"></ion-icon>
+        </div>
+        <ion-label>
+          <h2 class="sale-id">Facture #<span>{{ sale.id }}</span></h2>
+          <p class="sale-date"><ion-icon name="time-outline"></ion-icon> {{ sale.date | date:'dd MMM yyyy, HH:mm' }}</p>
+          <p class="sale-date" *ngIf="sale.client?.nom"><ion-icon name="person-outline"></ion-icon> {{ sale.client?.nom }}</p>
+        </ion-label>
+        <div slot="end" class="sale-stats">
+          <div class="total-price">+{{ sale.totalTtc | currency:'TND':'symbol':'1.0-3' }}</div>
+          <div class="profit-badge">
+            Profit: {{ sale.profitTotal | currency:'TND':'symbol':'1.0-3' }}
+          </div>
+          <div class="action-buttons">
+            <ion-button size="small" fill="clear" color="primary" (click)="exportInvoice($event, sale.id)">
+              <ion-icon name="download-outline" slot="start"></ion-icon>
+              PDF
+            </ion-button>
+            <ion-button size="small" fill="clear" color="secondary">
+              <ion-icon name="eye-outline" slot="start"></ion-icon>
+              Détails
+            </ion-button>
+          </div>
+        </div>
+      </ion-item>
+    </ion-list>
+  </div>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button routerLink="/create-sale" class="gold-fab">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>
